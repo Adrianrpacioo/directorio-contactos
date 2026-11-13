@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Contactos">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Directorio</title>
+</head>
+<body>
+  <header class="topbar">
+    <div><div class="eyebrow">DIRECTORIO PERSONAL</div><h1>Contactos</h1></div>
+    <button class="icon-btn" id="backupBtn" aria-label="Copias de seguridad" title="Copia de seguridad">↥</button>
+  </header>
+
+  <main>
+    <section id="view-home" class="view active">
+      <div class="hero">
+        <div><div class="eyebrow light">TU RED, ORGANIZADA</div><h2>Personas.<br><span>Con contexto.</span></h2>
+        <p>Un directorio privado para organizar tus contactos.</p></div>
+        <div class="hero-mark">◎</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="totalCount">0</strong><span>Contactos</span></div>
+        <div class="stat"><strong id="nearCount">0</strong><span>Cercanía alta</span></div>
+        <div class="stat"><strong id="cityCount">0</strong><span>Ubicaciones</span></div>
+      </div>
+      <div class="section-head"><div><div class="eyebrow">ACCESO RÁPIDO</div><h2>Tu directorio</h2></div></div>
+      <button class="primary wide" id="homeAdd">＋ Añadir contacto</button>
+      <button class="secondary wide" id="homeBrowse">Ver todos los contactos <span>→</span></button>
+      <div class="privacy-note"><span>▣</span><div><b>Almacenamiento en este dispositivo</b><p>Los datos se guardan localmente en este navegador. No se envían a ningún servidor.</p></div></div>
+    </section>
+
+    <section id="view-list" class="view">
+      <div class="section-head"><div><div class="eyebrow">PERSONAS GUARDADAS</div><h2>Directorio</h2></div><button class="small-add" id="listAdd">＋ Añadir</button></div>
+      <input id="search" class="search" placeholder="⌕  Buscar por nombre, profesión o lugar…" autocomplete="off">
+      <div class="filters">
+        <select id="filterCloseness"><option value="">Cualquier cercanía</option><option>Muy alta</option><option>Alta</option><option>Media</option><option>Baja</option><option>Por conocer</option></select>
+        <select id="filterProfession"><option value="">Todas las profesiones</option></select>
+        <select id="filterLocation"><option value="">Todas las ubicaciones</option></select>
+        <select id="filterIdeology"><option value="">Todas las ideologías</option></select>
+      </div>
+      <div class="result-line"><span id="resultCount">0 contactos</span><button id="clearFilters" class="text-btn">Limpiar filtros</button></div>
+      <div id="contactList" class="contact-list"></div>
+      <div id="emptyList" class="empty hidden"><div>◎</div><b>Aún no hay contactos</b><p>Importa una tarjeta de contacto o crea una ficha manualmente.</p><button class="primary" id="emptyAdd">Añadir el primero</button></div>
+    </section>
+
+    <section id="view-form" class="view">
+      <button class="back-btn" id="formBack">← Volver</button>
+      <div class="eyebrow">FICHA DE CONTACTO</div><h2 id="formTitle">Nuevo contacto</h2>
+      <div class="import-box">
+        <div><b>Importar desde Contactos</b><p>Selecciona una tarjeta .vcf exportada desde la agenda del iPhone.</p></div>
+        <label class="file-label">Elegir archivo<input id="vcfInput" type="file" accept=".vcf,text/vcard"></label>
+      </div>
+      <form id="contactForm">
+        <input type="hidden" id="contactId">
+        <label>Nombre y apellidos <em>*</em><input id="name" required placeholder="Nombre completo"></label>
+        <div class="two">
+          <label>Teléfono<input id="phone" type="tel" placeholder="+34…"></label>
+          <label>Correo electrónico<input id="email" type="email" placeholder="correo@ejemplo.com"></label>
+        </div>
+        <label>Profesión<input id="profession" list="professionOptions" placeholder="Ej. Abogado, estudiante…"><datalist id="professionOptions"><option>Estudiante</option><option>Docente</option><option>Empresario/a</option><option>Funcionario/a</option><option>Sanidad</option><option>Ingeniería</option><option>Periodismo</option><option>Autónomo/a</option></datalist></label>
+        <label>Ideología / orientación política<input id="ideology" placeholder="Dato opcional"></label>
+        <label>Ubicación<input id="location" placeholder="Ciudad, provincia o zona"></label>
+        <label>Grado de cercanía<select id="closeness"><option>Por conocer</option><option>Baja</option><option>Media</option><option>Alta</option><option>Muy alta</option></select></label>
+        <label>Notas<textarea id="notes" rows="4" placeholder="Información adicional que quieras recordar…"></textarea></label>
+        <div class="form-actions"><button type="button" class="secondary" id="cancelForm">Cancelar</button><button class="primary" type="submit">Guardar contacto</button></div>
+        <button type="button" class="delete-btn hidden" id="deleteContact">Eliminar contacto</button>
+      </form>
+      <p class="legal-hint">La ideología política puede constituir un dato personal especialmente protegido. Añádela únicamente cuando tengas una base jurídica adecuada y evita registrar información sensible innecesaria.</p>
+    </section>
+
+    <section id="view-detail" class="view">
+      <button class="back-btn" id="detailBack">← Directorio</button>
+      <div id="detailContent"></div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-view="home"><span>⌂</span>Inicio</button>
+    <button class="tab" data-view="list"><span>☷</span>Contactos</button>
+    <button class="tab" data-view="form"><span>＋</span>Añadir</button>
+  </nav>
+  <input type="file" id="backupInput" accept="application/json,.json" hidden>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
